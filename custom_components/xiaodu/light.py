@@ -2,7 +2,7 @@ import asyncio
 import logging
 
 from homeassistant import core
-from homeassistant.components.light import LightEntity, ColorMode, ATTR_BRIGHTNESS, ATTR_COLOR_TEMP, \
+from homeassistant.components.light import LightEntity, ColorMode, ATTR_BRIGHTNESS, \
     ATTR_COLOR_TEMP_KELVIN, LightEntityFeature, ATTR_EFFECT
 from . import XiaoDuAPI, ApplianceTypes
 
@@ -112,7 +112,7 @@ class XiaoDuLight(LightEntity):
         if 'color_temp_kelvin' in kwargs:
             # 无传则居中
             color_temp_kelvin = kwargs.get(ATTR_COLOR_TEMP_KELVIN, 4614)
-            color_temp = kwargs.get(ATTR_COLOR_TEMP, 261)
+            # color_temp = kwargs.get(ATTR_COLOR_TEMP_MIREDS, 261)
             self._attr_color_temp_kelvin = color_temp_kelvin
             # 将色温换算成比例
             # (比例 / 100 * 差值)+最小=真实色温
