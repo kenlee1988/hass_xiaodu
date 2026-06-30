@@ -48,13 +48,24 @@ class XiaoDuLock(LockEntity):
         self._attr_is_open = if_on
         self._attr_is_locked = not if_on
         self._attr_name = name
-        self._group_name = detail['groupName']
+        self._group_name = detail.get('groupName')
+        self._bot_name = detail.get('botName')
         self.pColorMode = None
         self.effectList = {}
         if if_on:
             self._attr_icon = "mdi:lock-open-outline"
         else:
             self._attr_icon = "mdi:lock"
+
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {(DOMAIN, self._api.applianceId)},
+            "name": self._attr_name,
+            "manufacturer": "小度",
+            "model": self._bot_name,
+            "suggested_area": self._group_name,
+        }
 
     async def async_update(self):
         # self._is_on = await self._api.switch_status()

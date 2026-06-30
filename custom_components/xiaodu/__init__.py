@@ -44,6 +44,13 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: config_entries.Conf
             session=session,
             applianceTypes=applianceTypes[i]['applianceTypes']
         )
+        # 诊断日志：打印每个设备上报的真实类型，便于排查未识别/识别错误的设备
+        _LOGGER.warning(
+            "XiaoDu设备类型诊断: name=%s applianceId=%s applianceTypes=%s",
+            applianceTypes[i].get("friendlyName") or applianceTypes[i].get("nickName"),
+            applianceId,
+            applianceTypes[i]['applianceTypes'],
+        )
     # 更新配置 由async_update_entry触发
     if not entry.update_listeners:
         entry.add_update_listener(async_update_options)

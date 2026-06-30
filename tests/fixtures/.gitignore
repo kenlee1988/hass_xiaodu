@@ -1,0 +1,4 @@
+# Personal device data fetched by fetch_fixtures.py — never commit.
+# Contains your device names, appliance IDs and house names.
+*
+!.gitignore

@@ -81,7 +81,8 @@ class XiaoduSwitch(SwitchEntity):
         self._is_on = if_on
         # self._attr_is_on = if_on
         self._name = name
-        self._group_name = botName
+        self._group_name = groupName
+        self._bot_name = botName
         self.switchType = switchType
         self.typeValue = typeValue
         self.headerNameOn = headerNameOn
@@ -97,7 +98,9 @@ class XiaoduSwitch(SwitchEntity):
         return {
             "identifiers": {(DOMAIN, self._api.applianceId)},
             "name": self._name,
-            "manufacturer": self._group_name,
+            "manufacturer": "小度",
+            "model": self._bot_name,
+            "suggested_area": self._group_name,
         }
 
     @property

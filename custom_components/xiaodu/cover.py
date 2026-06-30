@@ -34,6 +34,8 @@ class XiaoDuCover(CoverEntity):
     def __init__(self, api: XiaoDuAPI, name: str, if_on: bool, detail):
         self._api = api
         self._attr_name = name
+        self._group_name = detail.get('groupName')
+        self._bot_name = detail.get('botName')
         self._attr_unique_id = f"{api.applianceId}_cover"
         self._attr_supported_features = CoverEntityFeature(CoverEntityFeature.OPEN | CoverEntityFeature.CLOSE |
                                                            CoverEntityFeature.STOP)
@@ -42,6 +44,16 @@ class XiaoDuCover(CoverEntity):
             self._attr_icon = "mdi:curtains"
         else:
             self._attr_icon = "mdi:curtains-closed"
+
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {(DOMAIN, self._api.applianceId)},
+            "name": self._attr_name,
+            "manufacturer": "小度",
+            "model": self._bot_name,
+            "suggested_area": self._group_name,
+        }
 
     async def async_open_cover(self, **kwargs):
         """Open the cover."""

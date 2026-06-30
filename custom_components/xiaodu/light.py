@@ -49,6 +49,7 @@ class XiaoDuLight(LightEntity):
         self._attr_is_on = if_on
         self._attr_name = name
         self._group_name = detail['groupName']
+        self._bot_name = detail.get('botName')
         self.pColorMode = None
         self.effectList = {}
         if if_on:
@@ -91,6 +92,16 @@ class XiaoDuLight(LightEntity):
             self._attr_supported_color_modes = {ColorMode.ONOFF}
             self._attr_color_mode = ColorMode.ONOFF
             self.pColorMode = ColorMode.ONOFF
+
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {(DOMAIN, self._api.applianceId)},
+            "name": self._attr_name,
+            "manufacturer": "小度",
+            "model": self._bot_name,
+            "suggested_area": self._group_name,
+        }
 
     @property
     def color_temp_kelvin(self) -> int | None:

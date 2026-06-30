@@ -55,12 +55,23 @@ class XiaoduButton(ButtonEntity):
         else:
             self._attr_unique_id = f"{api.applianceId}_switch"
         self._attr_name = name
-        self._group_name = bot_name
+        self._group_name = group_name
+        self._bot_name = bot_name
         self._attr_device_class = ButtonDeviceClass.IDENTIFY
         self._attr_icon = "mdi:gesture-tap-button"
         self.switchType = switchType
         self.typeValue = typeValue
         self.headerName = headerName
+
+    @property
+    def device_info(self):
+        return {
+            "identifiers": {(DOMAIN, self._api.applianceId)},
+            "name": self._attr_name,
+            "manufacturer": "小度",
+            "model": self._bot_name,
+            "suggested_area": self._group_name,
+        }
 
     async def async_press(self) -> None:
         """Handle the button press."""
