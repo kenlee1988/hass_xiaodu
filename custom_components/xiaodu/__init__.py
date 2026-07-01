@@ -46,7 +46,7 @@ async def async_setup_entry(hass: core.HomeAssistant, entry: config_entries.Conf
             applianceTypes=applianceTypes[i]['applianceTypes']
         )
         # 诊断日志：打印每个设备上报的真实类型，便于排查未识别/识别错误的设备
-        _LOGGER.INFO(
+        _LOGGER.info(
             "XiaoDu设备类型诊断: name=%s applianceId=%s applianceTypes=%s",
             applianceTypes[i].get("friendlyName") or applianceTypes[i].get("nickName"),
             applianceId,
