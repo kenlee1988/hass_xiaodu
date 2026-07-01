@@ -9,7 +9,7 @@ from homeassistant.util.percentage import (
 )
 from homeassistant.util.scaling import int_states_in_range
 
-from . import ApplianceTypes
+from .ApplianceTypes import ApplianceTypes
 from .api.XiaoDuAPI import XiaoDuAPI
 from .const import DOMAIN
 

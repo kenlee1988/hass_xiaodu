@@ -3,7 +3,7 @@ import logging
 from homeassistant import core
 from homeassistant.components.cover import CoverEntity, CoverEntityFeature
 
-from . import ApplianceTypes
+from .ApplianceTypes import ApplianceTypes
 from .api.XiaoDuAPI import XiaoDuAPI
 from .const import DOMAIN
 

@@ -5,7 +5,7 @@ from homeassistant import core
 from homeassistant.components.light import LightEntity, ColorMode, ATTR_BRIGHTNESS, \
     ATTR_COLOR_TEMP_KELVIN, LightEntityFeature, ATTR_EFFECT
 
-from . import ApplianceTypes
+from .ApplianceTypes import ApplianceTypes
 from .api.XiaoDuAPI import XiaoDuAPI
 from .const import DOMAIN
 

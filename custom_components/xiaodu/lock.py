@@ -3,7 +3,7 @@ import logging
 from homeassistant import core
 from homeassistant.components.lock import LockEntity
 
-from . import ApplianceTypes
+from .ApplianceTypes import ApplianceTypes
 from .api.XiaoDuAPI import XiaoDuAPI
 from .const import DOMAIN
 

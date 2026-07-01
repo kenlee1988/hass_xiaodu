@@ -5,7 +5,7 @@ from homeassistant.components.climate import ClimateEntity, ClimateEntityFeature
     HVACMode, FAN_MIDDLE, FAN_FOCUS, FAN_DIFFUSE
 from homeassistant.const import UnitOfTemperature, ATTR_TEMPERATURE
 
-from . import ApplianceTypes
+from .ApplianceTypes import ApplianceTypes
 from .api.XiaoDuAPI import XiaoDuAPI
 from .const import DOMAIN
 from .heater import XiaoDuHeater
