@@ -4,7 +4,6 @@ import logging
 from homeassistant import core, config_entries
 from homeassistant.const import Platform
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from .ApplianceTypes import ApplianceTypes
 from .api.XiaoDuAPI import XiaoDuAPI
 from .const import DOMAIN
 

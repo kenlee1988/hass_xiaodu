@@ -1,12 +1,12 @@
-import asyncio
+# import asyncio
 
 from dev.xiaodu.custom_components.xiaodu import ApplianceTypes
-from xiaodu.api.XiaoDuAPI import XiaoDuAPI
-import tracemalloc
+# from xiaodu.api.XiaoDuAPI import XiaoDuAPI
+# import tracemalloc
 # async def main():
 #     X = XiaoDuAPI(“”,s)
 #     print(X.checkSession())
-import aiohttp
+# import aiohttp
 
 if __name__ == "__main__":
     # s = aiohttp.ClientSession()
@@ -15,5 +15,4 @@ if __name__ == "__main__":
     # asyncio.run(main())
     # print("主程序结束")
     A = ApplianceTypes()
-    print(A.is_light(['LIGHT','DESK_LAMP']))
-
+    print(A.is_light(['LIGHT', 'DESK_LAMP']))

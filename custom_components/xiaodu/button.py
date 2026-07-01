@@ -1,5 +1,3 @@
-import json
-
 from . import XiaoDuAPI, ApplianceTypes
 from homeassistant import core
 from homeassistant.components.button import ButtonEntity, ButtonDeviceClass
@@ -47,7 +45,7 @@ async def async_setup_entry(hass: core.HomeAssistant, config_entry, async_add_en
 
 
 class XiaoduButton(ButtonEntity):
-    def __init__(self, api: XiaoDuAPI, name: str, group_name: str, bot_name: str, switchType: str, typeValue: str, headerName:str):
+    def __init__(self, api: XiaoDuAPI, name: str, group_name: str, bot_name: str, switchType: str, typeValue: str, headerName: str):
         self._api = api
         #  重复实体的 uid 会重复 来一个独一无二的
         if switchType != "switch":
@@ -75,5 +73,5 @@ class XiaoduButton(ButtonEntity):
 
     async def async_press(self) -> None:
         """Handle the button press."""
-        flag = await self._api.button_panel(self.switchType, self.typeValue, self.headerName)
+        _ = await self._api.button_panel(self.switchType, self.typeValue, self.headerName)
         self.async_schedule_update_ha_state(True)

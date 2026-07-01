@@ -7,6 +7,7 @@ from homeassistant.components.cover import CoverEntity, CoverEntityFeature
 
 _LOGGER = logging.getLogger(__name__)
 
+
 async def async_setup_entry(hass: core.HomeAssistant, config_entry, async_add_entities):
     api = hass.data[DOMAIN][config_entry.entry_id]
     entities = []
@@ -57,17 +58,17 @@ class XiaoDuCover(CoverEntity):
 
     async def async_open_cover(self, **kwargs):
         """Open the cover."""
-        flag = await self._api.set_curtain_open()
+        _ = await self._api.set_curtain_open()
         # await self.async_update()
         self.async_schedule_update_ha_state(True)
 
     async def async_close_cover(self, **kwargs):
-        flag = await self._api.set_curtain_close()
+        _ = await self._api.set_curtain_close()
         # await self.async_update()
         self.async_schedule_update_ha_state(True)
 
     async def async_stop_cover(self, **kwargs):
-        flag = await self._api.set_curtain_stop()
+        _ = await self._api.set_curtain_stop()
         # await self.async_update()
         self.async_schedule_update_ha_state(True)
 

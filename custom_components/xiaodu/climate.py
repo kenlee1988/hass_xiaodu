@@ -41,12 +41,7 @@ class XiaoDuClimate(ClimateEntity):
         self._bot_name = detail.get('botName')
         self._attr_unique_id = f"{api.applianceId}_climate"
         # 支持的功能 小度 只能 开 关 温度 模式 风速
-        self._attr_supported_features = (
-                ClimateEntityFeature.TURN_ON |
-                ClimateEntityFeature.TURN_OFF |
-                ClimateEntityFeature.TARGET_TEMPERATURE |
-                ClimateEntityFeature.FAN_MODE
-        )
+        self._attr_supported_features = (ClimateEntityFeature.TURN_ON | ClimateEntityFeature.TURN_OFF | ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.FAN_MODE)
         # 根据平台的空调不同 有5档风的三挡的 兼容最低版本 统一 低中高
         self._attr_fan_modes = [
             FAN_LOW, FAN_MEDIUM, FAN_HIGH, FAN_MIDDLE, FAN_FOCUS, FAN_DIFFUSE]
@@ -98,12 +93,12 @@ class XiaoDuClimate(ClimateEntity):
 
     async def async_turn_on(self):
         """Turn the entity on."""
-        flag = await self._api.set_ac_on()
+        _ = await self._api.set_ac_on()
         self.async_schedule_update_ha_state(True)
 
     async def async_turn_off(self):
         """Turn the entity off."""
-        flag = await self._api.set_ac_off()
+        _ = await self._api.set_ac_off()
         self.async_schedule_update_ha_state(True)
 
     async def async_set_fan_mode(self, fan_mode):
@@ -134,14 +129,14 @@ class XiaoDuClimate(ClimateEntity):
         # 查出别名 没有查出就原样
         mode = self._ac_mode_lookup.get(hvac_mode, hvac_mode)
         if mode == "off":
-            flag = await self._api.set_ac_off()
+            _ = await self._api.set_ac_off()
         else:
             # 先开机 如果是关机状态 这样设置模式就直接开机了
             detail = self.detail['appliance']
             turnOnState = detail['stateSetting']['turnOnState']['value']
             if turnOnState.lower() == "off":
-                flag = await self._api.set_ac_on()
-            flag = await self._api.set_ac_mode(mode)
+                _ = await self._api.set_ac_on()
+            _ = await self._api.set_ac_mode(mode)
         self.async_schedule_update_ha_state(True)
 
     async def async_update(self):

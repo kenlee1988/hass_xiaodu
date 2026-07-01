@@ -78,6 +78,7 @@ class XiaoDuLock(LockEntity):
             else:
                 if_onS = str(detail['attributes']['turnOnState']['value']).lower()
         except Exception as e:
+            print(f"请求小度出错: {e}")
             return
         if if_onS == "on":
             if_on = True

@@ -67,4 +67,3 @@ class ApplianceTypes:
             if i in switch:
                 return True
         return False
-

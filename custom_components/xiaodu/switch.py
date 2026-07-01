@@ -1,6 +1,5 @@
 import asyncio
 import json
-import random
 
 from homeassistant import core
 from homeassistant.components.switch import SwitchEntity
@@ -113,10 +112,9 @@ class XiaoduSwitch(SwitchEntity):
 
     async def async_turn_on(self):
         if self.switchType == "switch":
-            flag = await self._api.switch_on()
+            _ = await self._api.switch_on()
         else:
-            flag = await self._api.switch_panel_on(self.switchType, self.typeValue, self.headerNameOn,
-                                                   self.headerNameOff, self.payloadObject)
+            _ = await self._api.switch_panel_on(self.switchType, self.typeValue, self.headerNameOn, self.headerNameOff, self.payloadObject)
         self._is_on = True
         self._attr_icon = "mdi:toggle-switch-variant"
         # await self.async_update()
@@ -124,10 +122,9 @@ class XiaoduSwitch(SwitchEntity):
 
     async def async_turn_off(self):
         if self.switchType == "switch":
-            flag = await self._api.switch_off()
+            _ = await self._api.switch_off()
         else:
-            flag = await self._api.switch_panel_off(self.switchType, self.typeValue, self.headerNameOn,
-                                                    self.headerNameOff, self.payloadObject)
+            _ = await self._api.switch_panel_off(self.switchType, self.typeValue, self.headerNameOn, self.headerNameOff, self.payloadObject)
         self._is_on = False
         self._attr_icon = "mdi:toggle-switch-variant-off"
         # await self.async_update()

@@ -83,8 +83,7 @@ class XiaoDuLight(LightEntity):
             self._attr_effect_list = effect_list
 
         # 最基础的只有开和关 没有模式 色温 亮度控制
-        if 'mode' not in detail['stateSetting'] and 'brightness' not in detail[
-            'stateSetting'] and 'colorTemperatureInKelvin' not in detail['stateSetting']:
+        if 'mode' not in detail['stateSetting'] and 'brightness' not in detail['stateSetting'] and 'colorTemperatureInKelvin' not in detail['stateSetting']:
             self._attr_supported_color_modes = {ColorMode.ONOFF}
             self._attr_color_mode = ColorMode.ONOFF
             self.pColorMode = ColorMode.ONOFF
@@ -113,13 +112,13 @@ class XiaoDuLight(LightEntity):
         # _LOGGER.info(kwargs)
         # 开
         if kwargs == {}:
-            flag = await self._api.switch_on()
+            _ = await self._api.switch_on()
         # 控制亮度 计算亮度 1-255
         if 'brightness' in kwargs:
             brightness = kwargs.get(ATTR_BRIGHTNESS, 255)
             attributeValue = round(brightness / 255 * 100)
             self._brightness = brightness
-            flag = await self._api.brightness(attributeValue)
+            _ = await self._api.brightness(attributeValue)
         if 'color_temp_kelvin' in kwargs:
             # 无传则居中
             color_temp_kelvin = kwargs.get(ATTR_COLOR_TEMP_KELVIN, 4614)
@@ -129,14 +128,14 @@ class XiaoDuLight(LightEntity):
             # (比例 / 100 * 差值)+最小=真实色温
             mddile = self.max_color_temp_kelvin - self.min_color_temp_kelvin
             attributeValue = round((color_temp_kelvin - self.min_color_temp_kelvin) / mddile * 100)
-            flag = await self._api.colorTemperatureInKelvin(attributeValue)
+            _ = await self._api.colorTemperatureInKelvin(attributeValue)
         if 'effect' in kwargs:
             effect = kwargs.get(ATTR_EFFECT, "读写")
             mode = "READING"
             for i in self.effectList:
                 if self.effectList[i] == effect:
                     mode = i
-            flag = await self._api.light_set_mode(mode)
+            _ = await self._api.light_set_mode(mode)
         self._is_on = True
         self._attr_icon = "mdi:lightbulb"
         # await self.async_update()

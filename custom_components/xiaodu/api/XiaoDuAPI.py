@@ -1,9 +1,8 @@
 import json
-
 import aiohttp
+import logging
 
 HOST = 'https://xiaodu.baidu.com'
-import logging
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,8 +30,7 @@ class XiaoDuAPI:
                 return [False, "invalid_auth"]
             return [True, None]
         except Exception as e:
-            logging.error("检查cookie 请求小度出错")
-            logging.error(str(e))
+            logging.error(f"检查cookie 请求小度出错: {e}")
             return [False, "cannot_xiaodu"]
 
     async def auth(self) -> bool:
@@ -50,7 +48,7 @@ class XiaoDuAPI:
             json = await res.json()
             return json['data']['appliances']
         except Exception as e:
-            logging.error("请求小度出错")
+            logging.error(f"请求小度出错: {e}")
             return []
 
     async def switch_on(self):
@@ -91,7 +89,7 @@ class XiaoDuAPI:
                 return json['data']
             return {}
         except Exception as e:
-            logging.error("请求小度出错")
+            logging.error(f"请求小度出错: {e}")
             return {}
 
     async def get_details(self, houseId: str, applianceIds: list):
@@ -108,8 +106,7 @@ class XiaoDuAPI:
                 return json['data']
             return {}
         except Exception as e:
-            logging.error("请求小度出错")
-            logging.error(str(e))
+            logging.error(f"请求小度出错: {e}")
             return {}
 
     async def switch_toggle(self, method: bool):
@@ -255,8 +252,7 @@ class XiaoDuAPI:
                 houseList_2[i['houseId']] = i['houseName']
             return houseList_2
         except Exception as e:
-            logging.error("获取房屋 请求小度出错")
-            logging.error(str(e))
+            logging.error(f"获取房屋 请求小度出错: {e}")
             return []
 
     async def get_device_wifi_id(self, houseId: str):
@@ -270,8 +266,7 @@ class XiaoDuAPI:
             json = await res.json()
             return json['data']['appliances']
         except Exception as e:
-            logging.error("请求小度出错")
-            logging.error(str(e))
+            logging.error(f"请求小度出错: {e}")
             return []
 
     async def get_device_wifi_id_dict(self, houseId: str):
@@ -325,9 +320,7 @@ class XiaoDuAPI:
                                     "value": %s
                                 }
                             }
-                            """ % (
-            payloadObject[1:-1], '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"',
-            '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"'))
+                            """ % (payloadObject[1:-1], '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"', '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"'))
         else:
             payload = json.loads("""
                             {
@@ -346,8 +339,7 @@ class XiaoDuAPI:
                                     "value": %s
                                 }
                             }
-                            """ % ('"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"',
-            '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"'))
+                            """ % ('"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"', '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"'))
         submit = {
             "header": {
                 "namespace": "DuerOS.ConnectedHome.Control",
@@ -379,9 +371,7 @@ class XiaoDuAPI:
                                     "value": %s
                                 }
                             }
-                            """ % (
-            payloadObject[1:-1], '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"',
-            '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"'))
+                            """ % (payloadObject[1:-1], '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"', '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"'))
         else:
             payload = json.loads("""
                             {
@@ -400,8 +390,7 @@ class XiaoDuAPI:
                                     "value": %s
                                 }
                             }
-                            """ % ('"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"',
-            '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"'))
+                            """ % ('"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"', '"' + self.applianceId + '"', '"' + switchType + '"', '"' + typeValue + '"'))
         submit = {
             "header": {
                 "namespace": "DuerOS.ConnectedHome.Control",
@@ -428,8 +417,7 @@ class XiaoDuAPI:
                             },
                             %s: {}
                         }
-                        """ % ('"' + self.applianceId + '"', '"' + switchType + '"',
-        '"' + self.applianceId + '"', '"' + switchType + '"'))
+                        """ % ('"' + self.applianceId + '"', '"' + switchType + '"', '"' + self.applianceId + '"', '"' + switchType + '"'))
         submit = {
             "header": {
                 "namespace": "DuerOS.ConnectedHome.Control",
@@ -440,7 +428,6 @@ class XiaoDuAPI:
         }
         flag = await self.send_command(submit)
         return flag[0]
-
 
     async def send_command(self, submit: dict):
         api = "/saiya/smarthome/directivesend?from=h5_control"
@@ -454,7 +441,7 @@ class XiaoDuAPI:
                 return [False, "cookie失效喔，请及时更新"]
             return [False, json['msg']]
         except Exception as e:
-            logging.error("请求小度出错")
+            logging.error(f"请求小度出错: {e}")
             return [False, "请求小度出错"]
 
     def _common_header(self):
