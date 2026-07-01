@@ -1,9 +1,11 @@
 import logging
 
 from homeassistant import core
-from .const import DOMAIN
-from . import XiaoDuAPI, ApplianceTypes
 from homeassistant.components.cover import CoverEntity, CoverEntityFeature
+
+from . import ApplianceTypes
+from .api.XiaoDuAPI import XiaoDuAPI
+from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 

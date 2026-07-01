@@ -4,8 +4,9 @@ import logging
 from homeassistant import core
 from homeassistant.components.light import LightEntity, ColorMode, ATTR_BRIGHTNESS, \
     ATTR_COLOR_TEMP_KELVIN, LightEntityFeature, ATTR_EFFECT
-from . import XiaoDuAPI, ApplianceTypes
 
+from . import ApplianceTypes
+from .api.XiaoDuAPI import XiaoDuAPI
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)

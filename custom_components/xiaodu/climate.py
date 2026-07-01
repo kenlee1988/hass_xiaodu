@@ -1,11 +1,13 @@
 import logging
 
 from homeassistant import core
-from . import ApplianceTypes, XiaoDuAPI
-from .const import DOMAIN
 from homeassistant.components.climate import ClimateEntity, ClimateEntityFeature, FAN_LOW, FAN_MEDIUM, FAN_HIGH, \
     HVACMode, FAN_MIDDLE, FAN_FOCUS, FAN_DIFFUSE
 from homeassistant.const import UnitOfTemperature, ATTR_TEMPERATURE
+
+from . import ApplianceTypes
+from .api.XiaoDuAPI import XiaoDuAPI
+from .const import DOMAIN
 from .heater import XiaoDuHeater
 
 _LOGGER = logging.getLogger(__name__)

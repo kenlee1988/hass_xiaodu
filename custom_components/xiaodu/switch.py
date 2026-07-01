@@ -1,11 +1,13 @@
 import asyncio
 import json
+import logging
 
 from homeassistant import core
 from homeassistant.components.switch import SwitchEntity
-from . import XiaoDuAPI, ApplianceTypes
+
+from . import ApplianceTypes
+from .api.XiaoDuAPI import XiaoDuAPI
 from .const import DOMAIN
-import logging
 
 _LOGGER = logging.getLogger(__name__)
 
