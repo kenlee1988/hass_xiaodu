@@ -6,6 +6,7 @@ from .const import DOMAIN
 from homeassistant.components.climate import ClimateEntity, ClimateEntityFeature, FAN_LOW, FAN_MEDIUM, FAN_HIGH, \
     HVACMode, FAN_MIDDLE, FAN_FOCUS, FAN_DIFFUSE
 from homeassistant.const import UnitOfTemperature, ATTR_TEMPERATURE
+from .heater import XiaoDuHeater
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,9 +17,11 @@ async def async_setup_entry(hass: core.HomeAssistant, config_entry, async_add_en
     A = ApplianceTypes()
     for device_id in api:
         aapi: XiaoDuAPI = api[device_id]
-        # 判断是否是climate设备
+        # 空调 -> XiaoDuClimate；地暖 -> XiaoDuHeater（同为 climate 平台）
         applianceTypes = aapi.applianceTypes
-        if not A.is_climate(applianceTypes):
+        is_climate = A.is_climate(applianceTypes)
+        is_heater = A.is_heater(applianceTypes)
+        if not (is_climate or is_heater):
             continue
         detail = await aapi.get_detail()
         if detail == []:
@@ -29,7 +32,10 @@ async def async_setup_entry(hass: core.HomeAssistant, config_entry, async_add_en
             if_on = True
         else:
             if_on = False
-        entities.append(XiaoDuClimate(api[device_id], name, if_on, detail['appliance']))
+        if is_climate:
+            entities.append(XiaoDuClimate(api[device_id], name, if_on, detail['appliance']))
+        else:
+            entities.append(XiaoDuHeater(api[device_id], name, if_on, detail['appliance']))
     async_add_entities(entities, update_before_add=True)
 
 

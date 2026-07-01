@@ -15,6 +15,7 @@ PLATFORMS = [
     Platform.SWITCH,
     Platform.COVER,
     Platform.CLIMATE,
+    Platform.FAN,
     Platform.BUTTON,
     Platform.LOCK,
 ]

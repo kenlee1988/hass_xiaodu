@@ -46,10 +46,9 @@ def at():
         ("SWITCH", "is_switch"),
         ("WASHING_MACHINE", "is_switch"),
         ("WINDOW_OPENER", "is_switch"),
-        # 地暖 / 新风 are intentionally routed to SWITCH (on/off only) — see
-        # the design decision in the integration; not climate.
-        ("HEATER", "is_switch"),
-        ("AIR_FRESHER", "is_switch"),
+        # 地暖 -> climate 平台(制热+温度)；新风 -> fan 平台(开关+风速)。
+        ("HEATER", "is_heater"),
+        ("AIR_FRESHER", "is_fan"),
     ],
 )
 def test_type_is_claimed_by_expected_checker(at, appliance_type, checker):
@@ -62,11 +61,17 @@ def test_air_condition_is_climate_not_switch(at):
     assert at.is_switch(["AIR_CONDITION"]) is False
 
 
-def test_heater_and_air_fresher_are_switch_not_climate(at):
-    """地暖/新风 stay as switches (only on/off), not climate."""
-    for t in ("HEATER", "AIR_FRESHER"):
-        assert at.is_switch([t]) is True
-        assert at.is_climate([t]) is False
+def test_heater_is_climate_not_switch(at):
+    """地暖 走 climate 平台(制热+温度)，不再是普通开关，也不是空调(AIR_CONDITION)。"""
+    assert at.is_heater(["HEATER"]) is True
+    assert at.is_switch(["HEATER"]) is False
+    assert at.is_climate(["HEATER"]) is False
+
+
+def test_air_fresher_is_fan_not_switch(at):
+    """新风 走 fan 平台(开关+风速)，不再是普通开关。"""
+    assert at.is_fan(["AIR_FRESHER"]) is True
+    assert at.is_switch(["AIR_FRESHER"]) is False
 
 
 def test_clothes_rack_is_both_switch_and_button(at):
@@ -86,6 +91,8 @@ def test_unknown_type_is_unclaimed(at):
     assert at.is_switch(unknown) is False
     assert at.is_cover(unknown) is False
     assert at.is_climate(unknown) is False
+    assert at.is_heater(unknown) is False
+    assert at.is_fan(unknown) is False
     assert at.is_button(unknown) is False
     assert at.is_lock(unknown) is False
 

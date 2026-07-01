@@ -236,6 +236,20 @@ class XiaoDuAPI:
                               "parameters": {"proxyConnectStatus": False}}}
         return await self.send_command(submit)
 
+    # 下面这些是通用 DuerOS 控制命令的语义别名（与 set_ac_* 同一套 payload，
+    # 只依赖 applianceId，地暖/新风等设备同样适用）。
+    async def temperature_up(self):
+        return await self.set_ac_temperature_jia()
+
+    async def temperature_down(self):
+        return await self.set_ac_temperature_jian()
+
+    async def fan_speed_up(self):
+        return await self.set_ac_fan_jia()
+
+    async def fan_speed_down(self):
+        return await self.set_ac_fan_jian()
+
     async def get_home_id_list(self):
         api = "/saiya/smarthome/multihouse"
         submit = {"method": "HOUSE_LIST"}
